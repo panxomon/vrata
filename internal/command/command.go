@@ -1,41 +1,34 @@
 package command
 
-import (
-	"fmt"
-)
+import "context"
 
+//un comando es una intencion en tiempo presente
 type Command interface {
-	Execute()
+	// Name returns the command name.
+	Name() string
+	// Execute executes the command.
+	Execute(context.Context, interface{}) error
 }
 
 type command struct {
-	name string
+	name    string
+	handler CommandFunc
 }
 
-type CommandHandler interface {
-	Handle(Command)
+type CommandFunc func(context.Context, interface{}) error
+
+func (c *command) Name() string {
+	return c.name
 }
 
-type commandHandler struct {
-	name string
+func (c *command) Execute(ctx context.Context, data interface{}) error {
+	return c.handler(ctx, data)
 }
 
-type CommandDispatcher struct {
-	handlers map[string]CommandHandler
-}
-
-func New() Command {
-	return command{name: "Create"}
-}
-
-func NewHandler() CommandHandler {
-	return commandHandler{name: "Create"}
-}
-
-func (c command) Execute() {
-	fmt.Println("Executing command: ", c.name)
-}
-
-func (c commandHandler) Handle(command Command) {
-	command.Execute()
+// NewCommand returns a new command.
+func NewCommand(name string, handler CommandFunc) Command {
+	return &command{
+		name:    name,
+		handler: handler,
+	}
 }

@@ -1,28 +1,22 @@
 package command_test
 
 import (
+	"context"
 	"testing"
 	"vrata/internal/command"
 )
 
 func Test_Create_Command(t *testing.T) {
 
-	command := command.New()
+	handler := func(ctx context.Context, data interface{}) error {
+		return nil
+	}
+
+	command := command.NewCommand("crear usuario", handler)
 
 	if command == nil {
-		t.Error("Expected a command")
+		t.Error("Expected command to be not nil")
 	}
+	command.Execute(context.TODO(), nil)
 
-	command.Execute()
-}
-
-func Test_Create_Handler(t *testing.T) {
-
-	handler := command.NewHandler()
-
-	if handler == nil {
-		t.Error("Expected a command handler")
-	}
-
-	handler.Handle(command.New())
 }
