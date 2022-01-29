@@ -11,7 +11,7 @@ type Result struct {
 }
 
 type Railway struct {
-	steps []Step
+	Steps []Step
 }
 
 type Step struct {
@@ -23,13 +23,18 @@ func New() *Railway {
 	return &Railway{}
 }
 
-func (r *Railway) AddStep(step Step) {
-	r.steps = append(r.steps, step)
+func (r *Railway) AddSteps(steps ...Step) *Railway {
+	r.Steps = append(r.Steps, steps...)
+	return r
 }
+
+// func (r *Railway) AddStep(step Step) {
+// 	r.Steps = append(r.Steps, step)
+// }
 
 func (r *Railway) Execute(data interface{}) Result {
 	var result Result
-	for _, step := range r.steps {
+	for _, step := range r.Steps {
 		result = step.Func(data)
 		if result.Error != nil {
 			return result
