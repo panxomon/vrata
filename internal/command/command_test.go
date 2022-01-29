@@ -1,28 +1,58 @@
 package command_test
 
 import (
+	"context"
+	"errors"
+	"fmt"
 	"testing"
 	"vrata/internal/command"
 )
 
 func Test_Create_Command(t *testing.T) {
 
-	command := command.New()
+	handler := func(ctx context.Context, data interface{}) error {
+		return nil
+	}
+
+	command := command.NewCommand("crear usuario", handler)
 
 	if command == nil {
-		t.Error("Expected a command")
+		t.Error("Expected command to be not nil")
 	}
+	command.Execute(context.TODO(), nil)
 
-	command.Execute()
 }
 
-func Test_Create_Handler(t *testing.T) {
+func Test_Command_Name(t *testing.T) {
 
-	handler := command.NewHandler()
-
-	if handler == nil {
-		t.Error("Expected a command handler")
+	data := &user{
+		name: "panxo",
+		age:  40,
 	}
 
-	handler.Handle(command.New())
+	command := command.NewCommand("crear usuario", crear_usuario)
+
+	if command.Name() != "crear usuario" {
+		t.Error("Expected command name to be 'crear usuario'")
+	}
+
+	command.Execute(context.TODO(), data)
+
+	fmt.Println(data)
+
+}
+
+type user struct {
+	name string
+	age  int
+}
+
+func crear_usuario(ctx context.Context, data interface{}) error {
+	usuario := data.(*user)
+
+	if usuario.name != "panxo" {
+		return errors.New("El nombre no es panxo")
+	}
+
+	return nil
 }

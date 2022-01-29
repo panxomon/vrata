@@ -1,6 +1,15 @@
-package usuario
+package user
 
 import "fmt"
+
+type User struct {
+	Name string
+	Age  int
+}
+
+type UserHandler interface {
+	Handle(User)
+}
 
 type Command interface {
 	Execute()
