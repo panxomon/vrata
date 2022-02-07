@@ -28,10 +28,6 @@ func (r *Railway) AddSteps(steps ...Step) *Railway {
 	return r
 }
 
-// func (r *Railway) AddStep(step Step) {
-// 	r.Steps = append(r.Steps, step)
-// }
-
 func (r *Railway) Execute(data interface{}) Result {
 	var result Result
 	for _, step := range r.Steps {
