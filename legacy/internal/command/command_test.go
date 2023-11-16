@@ -5,7 +5,7 @@ import (
 	"errors"
 	"fmt"
 	"testing"
-	"vrata/internal/command"
+	"vrata/legacy/internal/command"
 )
 
 func Test_Create_Command(t *testing.T) {

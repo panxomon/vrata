@@ -22,6 +22,7 @@ func (c *command) Name() string {
 }
 
 func (c *command) Execute(ctx context.Context, data interface{}) error {
+	//Data debo transmitirla y asignarla a un local
 	return c.handler(ctx, data)
 }
 

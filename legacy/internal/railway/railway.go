@@ -1,13 +1,8 @@
 package railway
 
-type Success struct {
-	Value     interface{}
-	Messagges []error
-}
-
 type Result struct {
-	Success *Success
-	Error   error
+	Value interface{}
+	Error error
 }
 
 type Railway struct {
@@ -27,10 +22,6 @@ func (r *Railway) AddSteps(steps ...Step) *Railway {
 	r.Steps = append(r.Steps, steps...)
 	return r
 }
-
-// func (r *Railway) AddStep(step Step) {
-// 	r.Steps = append(r.Steps, step)
-// }
 
 func (r *Railway) Execute(data interface{}) Result {
 	var result Result
