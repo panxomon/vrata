@@ -2,7 +2,7 @@ package railway_test
 
 import (
 	"testing"
-	"vrata/internal/railway"
+	"vrata/legacy/internal/railway"
 )
 
 func Test_Create_Step(t *testing.T) {

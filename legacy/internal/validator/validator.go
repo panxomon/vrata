@@ -1,7 +1,7 @@
 package validator
 
 import (
-	"vrata/internal/railway"
+	"vrata/legacy/internal/railway"
 )
 
 type Validator interface {
@@ -10,9 +10,13 @@ type Validator interface {
 
 type ValidatorFunction func(data interface{}) railway.Result
 
-//TODO: me quede aqui, necesito inyectar un contexto para poder validar los errores, o si no el return se muere en la pila de llamada
+// TODO: me quede aqui, necesito inyectar un contexto para poder validar los errores, o si no el return se muere en la pila de llamada
+// TODO: algo asi (r *railway.Result) => r.railway.Setp(railway.Step{})
 func AddRule(name string, function ValidatorFunction) railway.Step {
-	return railway.Step{Name: name, Func: function}
+	return railway.Step{
+		Name: name,
+		Func: function,
+	}
 }
 
 func Validate(data interface{}, rules ...railway.Step) railway.Result {
@@ -34,3 +38,10 @@ func Validate(data interface{}, rules ...railway.Step) railway.Result {
 
 // type error func(data interface{}) error
 // type Success func(data interface{})
+
+// func NewValidator() Validator {
+// 	return &validator{}
+// }
+
+// type validator struct {
+// }
