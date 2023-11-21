@@ -18,4 +18,5 @@
 #Ide files
 .hitssee
 legacy/.vscode
+.idea
 
